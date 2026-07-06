@@ -9,7 +9,7 @@ function loadTasks() {
 
     let taskArray = JSON.parse(localStorage.getItem("tasks")) || [];
 
-    taskArray.forEach(function(task) {
+    taskArray.forEach(function (task) {
         createTask(task);
     });
 
@@ -42,11 +42,11 @@ function addTask() {
 
     localStorage.setItem("tasks", JSON.stringify(taskArray));
 
-    newTask.value="";
-    
+    newTask.value = "";
+
 }
 
-function createTask (task) {
+function createTask(task) {
     let li = document.createElement("li");
 
     let span = document.createElement("span");
@@ -79,6 +79,15 @@ function createTask (task) {
 
     removeBtn.addEventListener("click", function () {
         li.remove();
+
+        let taskArray = JSON.parse(localStorage.getItem("tasks")) || [];
+
+        taskArray = taskArray.filter(function (item) {
+            return item !== task;
+        });
+
+        localStorage.setItem("tasks", JSON.stringify(taskArray));
+
         countTasks--;
         totalTasks.textContent = countTasks;
     })
