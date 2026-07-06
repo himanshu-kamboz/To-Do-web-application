@@ -3,6 +3,18 @@ let addBtn = document.getElementById("add-task");
 let tasks = document.getElementById("tasks");
 let totalTasks = document.getElementById("task-count");
 
+window.addEventListener("DOMContentLoaded", loadTasks);
+
+function loadTasks() {
+
+    let taskArray = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    taskArray.forEach(function(task) {
+        createTask(task);
+    });
+
+}
+
 let countTasks = 0;
 
 addBtn.addEventListener("click", addTask);
@@ -22,6 +34,19 @@ function addTask() {
         return;
     }
 
+    createTask(task);
+
+    let taskArray = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    taskArray.push(task);
+
+    localStorage.setItem("tasks", JSON.stringify(taskArray));
+
+    newTask.value="";
+    
+}
+
+function createTask (task) {
     let li = document.createElement("li");
 
     let span = document.createElement("span");
@@ -57,12 +82,5 @@ function addTask() {
         countTasks--;
         totalTasks.textContent = countTasks;
     })
-
-    let taskArray = JSON.parse(localStorage.getItem("tasks")) || [];
-
-    taskArray.push(task);
-
-    localStorage.setItem("tasks", JSON.stringify(taskArray));
-    
 }
 
